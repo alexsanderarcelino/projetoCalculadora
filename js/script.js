@@ -46,6 +46,7 @@ function atualizarDisplay() {
 }
 
 //-- Função para detectar os clicks nos botões --
+aux = 0;
 function btnClick(event) {
     const digito = event.target.value;   //-- Variável 'digito' recebe o valor do botão que foi clicado --
 
@@ -64,9 +65,10 @@ function btnClick(event) {
     }
     //-- Se o valor do botão apertado estiver no array de 'operacoesMatematicas' então a variável 'operacao' o receberá --
     const operacoesMatematicas = ['+', '-', '*', '/'];
-    if (operacoesMatematicas.includes(digito)) {
+    if (operacoesMatematicas.includes(digito) && aux == 0) {
         operacao = digito;
         estado = ESTADOS.OPERACAO;
+        aux++;
     }
 
     //-- Se clicar em '=' a operação será efetuada entre o 'primeiroValor' e 'segundoValor' --
@@ -93,6 +95,7 @@ function btnClick(event) {
             primeiroValor = resultado;
             segundoValor = null;
             operacao = null;
+            aux = 0;
         } else {
             inicializarEstado();
         }
@@ -104,6 +107,7 @@ function btnClick(event) {
         } else if (estado == ESTADOS.OPERACAO) {
             operacao = "";
             estado = ESTADOS.PRIMEIRO_VALOR;
+            aux = 0;
         }
         else if (estado == ESTADOS.SEGUNDO_VALOR) {
             segundoValor = segundoValor.slice(0, -1);
